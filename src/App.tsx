@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react";
 import './App.css';
+import DataList from './DataList';
+import NewsDataService from "./services/NewsDataService";
+import NewsData from './types/NewsData';
+
 
 function App() {
+
+  const [newsData, setNewsData] = useState<Array<NewsData>>([]);
+
+  useEffect(() => {
+    retrieveNewsData();
+  }, []);
+
+  const retrieveNewsData = () => {
+    NewsDataService.getAll()
+      .then((response: any) => {
+        setNewsData(response.data.feed);
+        console.log(response.data.feed);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="w-full h-screen flex flex-cols text-center">
+        <div className="grid mr-4 ml-4">
+          <DataList data={newsData} />
+        </div>
+     </div>
     </div>
   );
 }
