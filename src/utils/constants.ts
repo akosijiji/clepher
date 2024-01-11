@@ -1,0 +1,3 @@
+export const SEARCH_FUNCTION = 'NEWS_SENTIMENT';
+export const SEARCH_TICKERS = 'AAPL';
+export const API_KEY = 'RIBXT3XYLI69PC0Q';
